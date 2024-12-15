@@ -1,0 +1,66 @@
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 50px;
+    margin-left: -80px;
+    
+    
+}
+
+
+.profile-content-container {
+    width: 700px;
+    border: 1px solid grey;
+}
+
+
+.user-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 30px;
+    border-bottom: 1px solid grey;
+}
+
+
+.user-container > img {
+    width: 80px;
+}
+
+
+.user-container-username {
+    font-weight: bold;
+}
+
+
+.profile-container-interactions-selection {
+    display: flex;
+    gap: 50px;
+    margin-top: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: -10px;
+}
+
+
+.profile-container-interactions-selection > div {
+    color: rgba(0, 0, 0, 0.925);
+    padding: 10px;
+}
+
+.profile-container-interactions-selection > div:hover {
+    background-color: rgba(97, 97, 97, 0.555);
+}
+
+
+.profile-content {
+    padding: 20px 30px;
+}
+
+
+.active-section {
+    font-weight: bold;
+    color: rgb(0, 0, 0) !important;
+    text-decoration: underline;
+}

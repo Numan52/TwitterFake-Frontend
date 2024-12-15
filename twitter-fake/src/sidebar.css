@@ -1,0 +1,80 @@
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    padding: 0 40px;
+    
+    left: 400px;
+    top: 50px;
+}
+
+.logout-button {
+    margin-top: 20px;
+    height: 30px;
+    font-size: 18px;
+    background-color: rgba(107, 107, 107, 0.274);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+.sidebar-home, .sidebar-profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-size: 22px;
+   
+    img {
+       width: 50px; 
+    }
+    cursor: pointer;
+}
+
+
+.sidebar-home-link, .sidebar-profile-link {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Media Query for screens smaller than 768px (like phones) */
+@media (max-width: 768px) {
+    .sidebar-container {
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgb(255, 255, 255);
+        padding: 10px 10px; /* Reduce padding */
+        border-bottom: 1px solid grey;
+        gap: 50px;
+        
+    }
+
+
+    .feed-container {
+        width: 100%;
+        margin-top: 70px; /* So content doesn't hide under the top bar */
+        padding: 0 10px;
+    }
+
+
+    .logout-button {
+        margin: 0;
+    }
+
+    
+    
+}
+
+

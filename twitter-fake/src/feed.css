@@ -1,0 +1,271 @@
+.feed-post-image {
+    width: 45px;
+}
+
+
+.feed-container {
+    width: 700px;
+    border: 1px solid grey; 
+}
+
+
+.feed-post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-bottom: 1px rgba(0, 0, 0, 0.274) solid;
+    padding: 20px 30px 30px;
+    
+}
+
+.feed-post-input-container {
+    display: flex;
+    align-items: start;
+    gap: 15px;
+}
+
+
+.feed-post-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    
+}
+
+
+.feed-post-button {
+    margin-top: 10px;
+    width: 70px;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(93, 34, 231);
+    font-weight: bolder;
+    color: white;
+    cursor: pointer;
+}
+
+.feed-post-textarea {
+    border: none;
+    overflow: hidden;
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
+    width: 400px;
+    color: white;
+    background-color: rgb(20, 20, 20);
+}
+
+.post-user-container-image {
+    width: 40px;
+}
+
+.user-post-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 30px 30px;
+    gap: 10px;
+    
+}
+
+
+.user-post-container.multiple-posts {
+    border-bottom: 1px rgba(0, 0, 0, 0.274) solid;
+}
+
+
+.user-post-user-container {
+    display: flex;
+    flex-direction: col;
+    gap: 7px;
+}
+
+.user-post-content-container {
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;  
+    font-size: 20px;
+}
+
+
+.post-user-container-username {
+    font-size: 18px;
+}
+
+
+.user-post-createdAt {
+    color: rgb(87, 87, 87);
+    margin-left: 30px;
+    font-size: 16px;
+}
+
+.user-post-error-message {
+    padding: 30px 30px 30px;
+    font-size: 30px;
+}
+
+
+.user-post-interact-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+
+.user-post-respond-img, .user-post-heart-img, .user-post-black-heart-img {
+    cursor: pointer;
+    width: 25px;
+}
+
+
+.user-post-response-input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+
+.user-post-response-input {
+    border: none;
+    overflow: hidden;
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
+    width: 80%;
+    color: white;
+    background-color: rgb(20, 20, 20);
+}
+
+
+.user-post-send-response-button {
+    height: 40px;
+    width: 110px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(93, 34, 231);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+.user-post-response-container {
+    margin-top: 10px;
+    border-top: 1px dashed rgba(143, 143, 143, 0.678);
+}
+
+
+.user-post-response-container-2 {
+    display: flex;
+    flex-direction: column;
+    
+    padding-top: 20px;
+    gap: 10px;
+    margin-left: 40px;
+}
+
+
+.post-response-user-container-image {
+    width: 30px;
+}
+
+
+.user-post-response-user-container {
+    display: flex;
+    gap: 7px;
+    
+}
+
+
+.user-response-createdAt {
+    margin-left: 30px;
+}
+
+
+.user-response-heart-img {
+    width: 20px;
+    cursor: pointer;
+}
+
+
+.user-post-response-content {
+    font-size: 20px;
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;  
+}
+
+
+.user-post-comments-header {
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
+
+.user-response-interact-container {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    gap: 20px;
+}
+
+
+.feed-loading-info {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+
+.user-post-like-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    gap: 5px;
+}
+
+
+.user-post-response-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    gap: 5px;
+}
+
+
+.user-post-response-like-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    gap: 5px;
+}
+
+
+@media (max-width: 768px) {
+    .feed-post-button-container {
+        justify-content: flex-start;
+        
+    }
+}

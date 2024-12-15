@@ -1,0 +1,62 @@
+html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+
+
+.login-container {
+    display: flex;
+    margin: 100px auto;
+    background-color: rgba(10, 10, 10, 0.199);
+    padding: 30px;
+    width: 500px;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.login-header {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.login-container > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+
+.login-container > form > input{
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+}
+
+.login-button {
+    width: 90px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    align-self: flex-start;
+    background-color: rgba(3, 3, 255, 0.74);
+    color: white;
+    border-radius: 3px;
+}
+
+
+.login-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    
+}
+
+.register-message {
+    font-size: 18px;
+}

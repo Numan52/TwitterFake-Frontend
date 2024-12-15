@@ -1,0 +1,59 @@
+html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.register-container {
+    background-color: rgba(10, 10, 10, 0.199);
+    padding: 30px;
+    width: 500px;
+    margin: 100px auto;
+    border-radius: 10px;
+    
+}
+
+.register-header {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.register-container > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.register-container > form > input{
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+}
+
+.register-button {
+    width: 90px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    align-self: flex-start;
+    background-color: rgba(3, 3, 255, 0.74);
+    color: white;
+    border-radius: 3px;
+}
+
+
+.register-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    
+    
+}
+
+.login-message {
+    font-size: 18px;
+}
