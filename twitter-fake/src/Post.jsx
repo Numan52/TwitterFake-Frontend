@@ -10,7 +10,6 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
       try {
         console.log(currentUserId)
         const imageData = await getUserImage(authorId)
-        console.log(imageData)
         setAuthorImage(imageData)
       } catch (error) {
         console.log(error.message)

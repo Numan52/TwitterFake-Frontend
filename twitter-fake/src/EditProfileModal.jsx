@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "./editProfile.css"
 
-const EditProfileModal = ({username, setUsername, onClose}) => {
+const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
     const [newUsername, setNewUsername] = useState(username)
     const [image, setImage] = useState(null); 
     const [successMessage, setSuccessMessage] = useState("");
@@ -67,7 +67,10 @@ const EditProfileModal = ({username, setUsername, onClose}) => {
         
         
         setUsername(newUsername)
-
+        // if (image != null) {
+        //     setUserImage(image)
+        // }
+        
         
     }
 

@@ -10,7 +10,13 @@ const Profile = (props) => {
     return (
         <div className='profile-container'>
             <Sidebar setIsLoggedIn={props.setIsLoggedIn} />
-            <ProfileContent />
+            <ProfileContent 
+                username={props.username}
+                currentUserId={props.currentUserId}
+                setUsername={props.setUsername}
+                userImage={props.userImage}
+                setUserImage={props.setUserImage}
+            />
         </div>
     )
 }

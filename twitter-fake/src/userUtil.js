@@ -1,6 +1,9 @@
-import {jwtDecode} from 'jwt-decode';
+import {InvalidTokenError, jwtDecode} from 'jwt-decode';
 
 export function getDecodedJwt(token) {
+    if (token == null) {
+        throw new InvalidTokenError("Error decoding jwt: No token")
+    }
     const decodedToken = jwtDecode(token)
     return decodedToken
 }
@@ -20,10 +23,8 @@ export async function getUserImage(userId) {
             "Authorization": `Bearer ${token}`
         }
     })
-    console.log(response)
     if(response.ok) {
         const data = await response.json()
-        console.log(`image data: ${data}`)
         return data.imageData
     } else {
         const message = await response.text()
@@ -43,9 +44,9 @@ export async function getUserIdFromUsername(username) {
     })
     if(response.ok) {
         const data = await response.json()
-        console.log(`data: ${data}`)
         return data
     } else {
+        
         console.log("failed to fetch user id")
     }
 }
@@ -56,9 +57,6 @@ export function checkJwtExpired() {
     let decodedToken = getDecodedJwt(token)
 
     let currentDate = new Date()
-    console.log("checkHJwtExpired")
-    console.log("jwt expires: ", decodedToken.exp * 1000)
-    console.log(currentDate.getTime())
     if (decodedToken.exp * 1000 < currentDate.getTime()) {
         console.log("jwt token expired")
         return true

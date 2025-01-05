@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./feed.css"
-import { getDecodedJwt, getUserIdFromUsername, getUserImage } from './userUtil'
+import { getDecodedJwt, getUserIdFromUsername } from './userUtil'
 import { RotatingLines } from 'react-loader-spinner'
 import Hamburger from 'hamburger-react'
 import Post from './Post'
 import { formatDate, handleLikePost, sendResponse, handleLikeResponse } from './PostUtility'
+import { InvalidTokenError } from 'jwt-decode'
 
-const Feed = () => {
+const Feed = ({userImage, currentUserId}) => {
   const [text, setText] = useState("")
   const [tweets, setTweets] = useState([])
   const [page, setPage] = useState(0)
@@ -14,50 +15,13 @@ const Feed = () => {
   const [respondingTo, setRespondingTo] = useState(null)
   const [responseText, setResponseText] = useState("")
   const [hasMoreTweets, setHasMoreTweets] = useState(true)
-  const [currentUserId, setCurrentUserId] = useState(null)
   const [showHamburger, setShowHamburger] = useState(null)
-  const [userImage, setUserImage] = useState(null)
+  
   const textareaRef = useRef(null)
 
   const token = localStorage.getItem("token")
   
- 
-  useEffect(() => {
-    
-    const fetchUserId = async () => {
-      try {
-        const currentUserId = await getUserIdFromUsername(getDecodedJwt(token).sub)
-        setCurrentUserId(currentUserId)
-        
-      } catch (error) {
-        console.error("Error fetching user: ", error)
-      }
-    }
 
-    fetchUserId(); 
-  }, [])
-  
-  
-
-  // console.log(getDecodedJwt(localStorage.getItem("token")).sub)
-
-
-  useEffect(() => {
-    const fetchUserImg = async () => {
-      try {
-        console.log(currentUserId)
-        const imageData = await getUserImage(currentUserId)
-        console.log(imageData)
-        setUserImage(imageData)
-      } catch (error) {
-        console.log(error.message)
-        console.error("Error fetching user image: ", error)
-      }
-      
-    }
-    
-     fetchUserImg()
-  }, [currentUserId])
 
   useEffect(() => {
     console.log("Component mounted, fetching tweets...");
@@ -130,11 +94,10 @@ const Feed = () => {
     setText("")
     if (!text.trim()) return
     
-    const userId = await getUserIdFromUsername(getDecodedJwt(token).sub)
-
-    console.log(userId)
-    
     try {
+      const userId = await getUserIdFromUsername(getDecodedJwt(token).sub)
+
+
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/postTweet`, {
         method: "POST",
         headers: { 
@@ -152,6 +115,9 @@ const Feed = () => {
         throw new Error("Error posting tweet")
       }
     } catch (error) {
+      if (error instanceof InvalidTokenError) {
+        window.location.reload()
+      }
       console.error("Error posting tweet: ", error)
     }
     
@@ -197,12 +163,6 @@ const Feed = () => {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [page, loading])
-
-
-  
-
-
-
   
 
 

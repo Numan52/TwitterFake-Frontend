@@ -5,8 +5,9 @@ import { RotatingLines } from 'react-loader-spinner'
 import Post from './Post'
 import { formatDate, handleLikePost, sendResponse, handleLikeResponse } from './PostUtility'
 import EditProfileModal from './EditProfileModal'
+import { InvalidTokenError } from 'jwt-decode'
 
-const ProfileContent = () => {
+const ProfileContent = ({username, currentUserId, setUsername, userImage, setUserImage}) => {
     const [activeSection, setActiveSection] = useState("posts")
     const [myPosts, setMyPosts] = useState([])
     const [likedPosts, setLikedPosts] = useState([])
@@ -16,11 +17,11 @@ const ProfileContent = () => {
     const [showEditModal, setShowEditModal] = useState(false)
 
     const token = localStorage.getItem("token")
-    const [username, setUsername] = useState(getDecodedJwt(token).sub)
+    
 
     const [respondingTo, setRespondingTo] = useState(null)
     const [responseText, setResponseText] = useState("")
-    const [currentUserId, setCurrentUserId] = useState(null)
+    
     const [hasMoreTweets, setHasMoreTweets] = useState(true)
     const [hasMorelikedTweets, setHasMoreLikedTweets] = useState(true)
     const [hasMoreResponses, setHasMoreResponses] = useState(true)
@@ -42,18 +43,6 @@ const ProfileContent = () => {
         setTweetsFunction = setLikedPosts;
     }
 
-
-   
-
-
-    useEffect(() => {
-
-        const fetchUserId = async () => {
-          const currentUserId = await getUserIdFromUsername(getDecodedJwt(token).sub)
-          setCurrentUserId(currentUserId)
-        }
-        fetchUserId(); 
-      }, [])
 
     useEffect(() => {
         setPage(0)
@@ -218,7 +207,7 @@ const ProfileContent = () => {
         <div className='user-container'>
             <div className='user-info-container'>
                 <div className='user-info'>
-                    <img src="user.png" alt="" />
+                    <img src={userImage == null ? "./user.png" : `data:image/jpg;base64,${userImage}`} alt="" />
                     <div className='user-container-username'>{username}</div>
                 </div>
 
@@ -290,6 +279,7 @@ const ProfileContent = () => {
                 <EditProfileModal 
                     username={username}
                     setUsername={setUsername}
+                    setUserImage={setUserImage}
                     onClose={() => setShowEditModal(false)}
                 />
             }
