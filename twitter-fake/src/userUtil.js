@@ -5,8 +5,35 @@ export function getDecodedJwt(token) {
     return decodedToken
 }
 
+
+export function getJwt() {
+    return localStorage.getItem("token")
+}
+
+
+export async function getUserImage(userId) {
+    const token = getJwt()
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/userImage?userId=${userId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    console.log(response)
+    if(response.ok) {
+        const data = await response.json()
+        console.log(`image data: ${data}`)
+        return data.imageData
+    } else {
+        const message = await response.text()
+        console.error("failed to fetch image: ", message )
+    }
+}
+
+
 export async function getUserIdFromUsername(username) {
-    const token = localStorage.getItem("token")
+    const token = getJwt()
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/getUserId?username=${username}`, {
         method: "GET",
         headers: {
@@ -25,8 +52,9 @@ export async function getUserIdFromUsername(username) {
 
 
 export function checkJwtExpired() {
-    let token = localStorage.getItem("token")
+    const token = getJwt()
     let decodedToken = getDecodedJwt(token)
+
     let currentDate = new Date()
     console.log("checkHJwtExpired")
     console.log("jwt expires: ", decodedToken.exp * 1000)

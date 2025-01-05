@@ -1,11 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getUserImage } from './userUtil'
 
 const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, setRespondingTo, respondingTo, sendResponse, handleLikeResponse, responseText, setResponseText, setTweets}) => {
+  const [authorImage, setAuthorImage] = useState(null)
+  const [responderImages, setResponderImages] = useState({})
+
+  useEffect(() => {
+    const fetchAuthorImg = async (authorId) => {
+      try {
+        console.log(currentUserId)
+        const imageData = await getUserImage(authorId)
+        console.log(imageData)
+        setAuthorImage(imageData)
+      } catch (error) {
+        console.log(error.message)
+        console.error("Error fetching user image: ", error)
+      }
+    }
+
+    fetchAuthorImg(tweet.authorId)
+  }, [currentUserId])
+
+
+  useEffect(() => {
+    const fetchRespondersImages = async (responses) => {
+      try {
+        for (const response of responses) {
+          const imageData = await getUserImage(response.authorId)
+          setResponderImages((oldImages) => {
+            return {
+              ...oldImages,
+              [response.id]:imageData
+            }
+          })
+        }
+        
+        
+      } catch (error) {
+        console.log(error.message)
+        console.error("Error fetching user image: ", error)
+      }
+    }
+
+    fetchRespondersImages(tweet.responses)
+  }, [tweet.responses])
   
+  
+  
+
   return (
     <div className={`user-post-container ${!singlePost ? "multiple-posts" : ""}`}  key={tweet.id}>
             <div className='user-post-user-container'>
-              <img src="./user.png" alt="profile-picture" className='post-user-container-image' />
+              <img src={authorImage == null ? "./user.png" : `data:image/jpg;base64,${authorImage}`} className='post-user-container-image' alt='Profile Picture'/>
               <div className='post-user-container-username'>{tweet.author}</div>
               <div className='user-post-createdAt'>{'\u26AC'} {formatDate(tweet.createdAt)}</div>
               {/* <Hamburger toggled={showHamburger === tweet.id} toggle={() => setShowHamburger(showHamburger === tweet.id ? null : tweet.id)}/> */}
@@ -54,9 +100,9 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
             {tweet.responses.map(response => (
               <div className='user-post-response-container' key={response.id}>
                 <div className='user-post-response-container-2'>
-                  
+
                   <div className='user-post-response-user-container'>
-                    <img src="./user.png" alt="profile-picture" className='post-response-user-container-image' />
+                    <img src={responderImages[response.id] == null ? "./user.png" : `data:image/jpg;base64,${responderImages[response.id]}`} alt="profile-picture" className='post-response-user-container-image' />
                     <div className='post-response-user-container-username'>{response.author}</div>
                     <div className='user-response-createdAt'>{'\u26AC'} {formatDate(response.createdAt)}</div>
                   </div>

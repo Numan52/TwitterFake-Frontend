@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./feed.css"
-import { getDecodedJwt, getUserIdFromUsername } from './userUtil'
+import { getDecodedJwt, getUserIdFromUsername, getUserImage } from './userUtil'
 import { RotatingLines } from 'react-loader-spinner'
 import Hamburger from 'hamburger-react'
 import Post from './Post'
@@ -16,24 +16,48 @@ const Feed = () => {
   const [hasMoreTweets, setHasMoreTweets] = useState(true)
   const [currentUserId, setCurrentUserId] = useState(null)
   const [showHamburger, setShowHamburger] = useState(null)
+  const [userImage, setUserImage] = useState(null)
+  const textareaRef = useRef(null)
 
   const token = localStorage.getItem("token")
-
+  
+ 
   useEffect(() => {
-
+    
     const fetchUserId = async () => {
-      const currentUserId = await getUserIdFromUsername(getDecodedJwt(token).sub)
-      setCurrentUserId(currentUserId)
+      try {
+        const currentUserId = await getUserIdFromUsername(getDecodedJwt(token).sub)
+        setCurrentUserId(currentUserId)
+        
+      } catch (error) {
+        console.error("Error fetching user: ", error)
+      }
     }
+
     fetchUserId(); 
   }, [])
   
-  const textareaRef = useRef(null)
+  
 
   // console.log(getDecodedJwt(localStorage.getItem("token")).sub)
 
-  
 
+  useEffect(() => {
+    const fetchUserImg = async () => {
+      try {
+        console.log(currentUserId)
+        const imageData = await getUserImage(currentUserId)
+        console.log(imageData)
+        setUserImage(imageData)
+      } catch (error) {
+        console.log(error.message)
+        console.error("Error fetching user image: ", error)
+      }
+      
+    }
+    
+     fetchUserImg()
+  }, [currentUserId])
 
   useEffect(() => {
     console.log("Component mounted, fetching tweets...");
@@ -49,6 +73,8 @@ const Feed = () => {
   useEffect(() => {
     console.log("tweets changed: ", tweets)
   }, [tweets])
+
+
 
 
   useEffect(() => {
@@ -72,7 +98,6 @@ const Feed = () => {
 
       if (response.ok) {
         const data = await response.json()
-        console.log(data)
         if(data.content.length > 0) {
           setTweets(prevTweets => [...prevTweets, ...data.content])
 
@@ -82,7 +107,6 @@ const Feed = () => {
             setHasMoreTweets(false)
           }
 
-          console.log(tweets)
         }
       
       }
@@ -188,7 +212,7 @@ const Feed = () => {
     <div className='feed-container'>
       <div className='feed-post-container'>
         <div className='feed-post-input-container'>
-          <img src="./user.png" alt="" className='feed-post-image'/>
+          <img src={userImage == null ? "./user.png" : `data:image/jpg;base64,${userImage}`} alt="" className='feed-post-image'/>
           <textarea 
             ref={textareaRef}
             className='feed-post-textarea' 
@@ -206,19 +230,24 @@ const Feed = () => {
         
       </div>
       <div className='feed-posts-container'>
-        {console.log(tweets)}
+        
         
         {tweets.length == 0 && !loading &&
           <div className='user-post-error-message'>
             No posts found
           </div>
         }
+
+        {console.log(tweets[0])}
         {tweets.map(tweet => (
+        
           <Post
-            singlePost={tweets.length === 1} 
+            singlePost={tweets.length === 1}
+
             key={tweet.id}
             tweet={tweet}
             currentUserId={currentUserId}
+            
             formatDate={formatDate}
             handleLikePost={handleLikePost}
             setRespondingTo={setRespondingTo}
@@ -230,6 +259,7 @@ const Feed = () => {
             setTweets={setTweets}
           />  
        ))}
+
       </div>
     
       {loading &&

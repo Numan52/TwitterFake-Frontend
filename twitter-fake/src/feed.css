@@ -1,5 +1,7 @@
 .feed-post-image {
-    width: 45px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
 }
 
 
@@ -21,7 +23,7 @@
 
 .feed-post-input-container {
     display: flex;
-    align-items: start;
+    align-items: center;
     gap: 15px;
 }
 
@@ -36,12 +38,12 @@
 
 .feed-post-button {
     margin-top: 10px;
-    width: 70px;
+    width: 80px;
     height: 35px;
     font-size: 20px;
     border-radius: 20px;
     border: none;
-    background-color: rgb(93, 34, 231);
+    background-color: rgba(39, 39, 39, 0.856);
     font-weight: bolder;
     color: white;
     cursor: pointer;
@@ -60,8 +62,17 @@
     background-color: rgb(20, 20, 20);
 }
 
+
+img {
+    object-fit: cover;
+}
+
+
 .post-user-container-image {
-    width: 40px;
+    width: 45px;
+    height: 45px;
+    border-radius: 27px;
+    
 }
 
 .user-post-container {
@@ -178,7 +189,9 @@
 
 
 .post-response-user-container-image {
-    width: 30px;
+    width: 35px;
+    height: 35px;
+    border-radius: 17px;
 }
 
 

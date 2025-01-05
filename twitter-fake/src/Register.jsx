@@ -37,6 +37,7 @@ const Register = () => {
       }
   
     } catch (error) {
+      setErrorMessage("An error ocurred. Pls try again later.")
       console.log("error while registering: " + error)
     }
   }
@@ -79,6 +80,8 @@ const Register = () => {
         </div>
 
       </form>
+      <div style={{marginTop:"10px", fontSize:"1.1rem"}}>(Registering may take 1-2 minutes for the first time)</div>
+
       {errorMessage && 
         <div style={{color:"red", marginTop:"15px"}}> 
           {errorMessage}

@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "hamburger-react": "^2.5.1",
-    "jwt-decode": "^4.0.0",
-    "react-loader-spinner": "^6.1.6"
-  }
-}

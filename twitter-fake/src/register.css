@@ -5,11 +5,14 @@ html, body, #root {
 }
 
 .register-container {
-    background-color: rgba(10, 10, 10, 0.199);
+    display: flex;
+    margin: 100px auto;
+    background-color: #d3d3d38c;
     padding: 30px;
     width: 500px;
-    margin: 100px auto;
+    flex-direction: column;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     
 }
 
@@ -29,19 +32,39 @@ html, body, #root {
 
 .register-container > form > input{
     width: 100%;
-    height: 30px;
+    height: 40px;
     font-size: 20px;
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
 }
+
+
+.register-container > form > input:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
 
 .register-button {
     width: 90px;
-    height: 30px;
+    height: 40px;
     font-size: 18px;
     cursor: pointer;
     align-self: flex-start;
-    background-color: rgba(3, 3, 255, 0.74);
+    background-color: #3b82f6;
     color: white;
+    border: none;
     border-radius: 3px;
+    transition: background-color 0.3s;
+    margin-left: -5px;
+}
+
+
+.register-button:hover {
+    background-color: #2563eb;
 }
 
 
@@ -56,4 +79,16 @@ html, body, #root {
 
 .login-message {
     font-size: 18px;
+}
+
+
+.login-message a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.login-message a:hover {
+    color: #2563eb;
 }

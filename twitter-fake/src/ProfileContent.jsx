@@ -4,6 +4,7 @@ import "./profile.css"
 import { RotatingLines } from 'react-loader-spinner'
 import Post from './Post'
 import { formatDate, handleLikePost, sendResponse, handleLikeResponse } from './PostUtility'
+import EditProfileModal from './EditProfileModal'
 
 const ProfileContent = () => {
     const [activeSection, setActiveSection] = useState("posts")
@@ -12,7 +13,10 @@ const ProfileContent = () => {
     const [myResponses, setMyResponses] = useState([])
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(0)
+    const [showEditModal, setShowEditModal] = useState(false)
 
+    const token = localStorage.getItem("token")
+    const [username, setUsername] = useState(getDecodedJwt(token).sub)
 
     const [respondingTo, setRespondingTo] = useState(null)
     const [responseText, setResponseText] = useState("")
@@ -22,9 +26,7 @@ const ProfileContent = () => {
     const [hasMoreResponses, setHasMoreResponses] = useState(true)
     
     
-
-    const token = localStorage.getItem("token")
-    const username = getDecodedJwt(token).sub
+    
     
     let tweetsToRender = [];
     let setTweetsFunction = null
@@ -39,6 +41,10 @@ const ProfileContent = () => {
         tweetsToRender = likedPosts;
         setTweetsFunction = setLikedPosts;
     }
+
+
+   
+
 
     useEffect(() => {
 
@@ -210,9 +216,18 @@ const ProfileContent = () => {
     return (
     <div className='profile-content-container'>
         <div className='user-container'>
-            <img src="user.png" alt="" />
-            <div className='user-container-username'>{username}</div>
-                
+            <div className='user-info-container'>
+                <div className='user-info'>
+                    <img src="user.png" alt="" />
+                    <div className='user-container-username'>{username}</div>
+                </div>
+
+                <div className='user-edit-container'>
+                    <button className='edit-user-btn' onClick={() => setShowEditModal(true)}>Edit Profile</button>
+                </div>
+            </div>
+            
+  
             <div className='profile-container-interactions-selection'> 
                 <div className={activeSection === "posts" ? "active-section" : ""} onClick={() => setActiveSection("posts")}>
                     Posts
@@ -270,6 +285,15 @@ const ProfileContent = () => {
                     />
                 </div>
             }
+
+            {showEditModal && 
+                <EditProfileModal 
+                    username={username}
+                    setUsername={setUsername}
+                    onClose={() => setShowEditModal(false)}
+                />
+            }
+
         </div>
         
     </div>
