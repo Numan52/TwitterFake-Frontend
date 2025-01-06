@@ -16,14 +16,14 @@ const Sidebar = (props) => {
       
       <Link to="/" className='sidebar-home-link'>
         <div className='sidebar-home'>
-          <img src="./home-logo.png" alt="" />
+          <img src="/home-logo.png" alt="" />
           <div>Home</div>
         </div>
       </Link>
         
-      <Link to="/profile" className='sidebar-profile-link'>
+      <Link to={`/profile/${props.currentUsername}`} className='sidebar-profile-link'>
         <div className='sidebar-profile'>
-          <img src="user.png" alt="" />
+          <img src="/user.png" alt="" />
           <div>Profile</div>   
         </div>
       </Link>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getUserImage } from './userUtil'
+import { Link } from 'react-router-dom'
 
 const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, setRespondingTo, respondingTo, sendResponse, handleLikeResponse, responseText, setResponseText, setTweets}) => {
   const [authorImage, setAuthorImage] = useState(null)
@@ -50,8 +51,13 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
   return (
     <div className={`user-post-container ${!singlePost ? "multiple-posts" : ""}`}  key={tweet.id}>
             <div className='user-post-user-container'>
-              <img src={authorImage == null ? "./user.png" : `data:image/jpg;base64,${authorImage}`} className='post-user-container-image' alt='Profile Picture'/>
-              <div className='post-user-container-username'>{tweet.author}</div>
+              {<Link to={`/profile/${tweet.author}`} className='profile-link'> 
+              <div className='user-post-user-link'>
+                <img src={authorImage == null ? "/user.png" : `data:image/jpg;base64,${authorImage}`} className='post-user-container-image' alt='Profile Picture'/>
+                <div className='post-user-container-username'>{tweet.author}</div>
+              </div>
+              </Link>}
+              
               <div className='user-post-createdAt'>{'\u26AC'} {formatDate(tweet.createdAt)}</div>
               {/* <Hamburger toggled={showHamburger === tweet.id} toggle={() => setShowHamburger(showHamburger === tweet.id ? null : tweet.id)}/> */}
             </div>
@@ -60,7 +66,7 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
             </div>
             <div className='user-post-interact-container'>
               <div className='user-post-like-container'>
-                <img src={tweet.likedBy.includes(currentUserId) ? "./heart.png" : "./black-heart.png" } className='user-post-heart-img' alt="" 
+                <img src={tweet.likedBy.includes(currentUserId) ? "/heart.png" : "/black-heart.png" } className='user-post-heart-img' alt="" 
                   onClick={() => {
                     const unliked = tweet.likedBy.includes(currentUserId)
                     handleLikePost(tweet.id, unliked, setTweets)
@@ -70,7 +76,7 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
               </div>
 
               <div className='user-post-response-button-container'>
-                <img src="./respond.png" className='user-post-respond-img' alt="" 
+                <img src="/respond.png" className='user-post-respond-img' alt="" 
                   onClick={() => setRespondingTo(tweet.id)} 
                 />
                 <div>{tweet.responses.length}</div>
@@ -101,8 +107,13 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
                 <div className='user-post-response-container-2'>
 
                   <div className='user-post-response-user-container'>
-                    <img src={responderImages[response.id] == null ? "./user.png" : `data:image/jpg;base64,${responderImages[response.id]}`} alt="profile-picture" className='post-response-user-container-image' />
-                    <div className='post-response-user-container-username'>{response.author}</div>
+                    {<Link to={`/profile/${response.author}`} className='profile-link'> 
+                      <div className='user-response-user-link'>
+                        <img src={responderImages[response.id] == null ? "./user.png" : `data:image/jpg;base64,${responderImages[response.id]}`} alt="profile-picture" className='post-response-user-container-image' />
+                        <div className='post-response-user-container-username'>{response.author}</div>
+                      </div>
+                    </Link>}
+                   
                     <div className='user-response-createdAt'>{'\u26AC'} {formatDate(response.createdAt)}</div>
                   </div>
 
@@ -112,7 +123,7 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
 
                   <div className='user-response-interact-container'>
                     <div className='user-post-response-like-container'>
-                      <img src={response.likedBy.includes(currentUserId) ? "./heart.png" : "./black-heart.png" } className='user-post-heart-img' alt="" 
+                      <img src={response.likedBy.includes(currentUserId) ? "/heart.png" : "/black-heart.png" } className='user-post-heart-img' alt="" 
                           onClick={() => {
                             const unliked = response.likedBy.includes(currentUserId)
                             handleLikeResponse(response.id, unliked, setTweets)

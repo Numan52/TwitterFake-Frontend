@@ -10,16 +10,16 @@ import Profile from './Profile';
 import { InvalidTokenError } from 'jwt-decode';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null)
-  const [userImage, setUserImage] = useState(null)
-  let [username, setUsername] = useState("")
-
+  const [currentUserImage, setUserImage] = useState(null)
+  let [currentUsername, setCurrentUsername] = useState("")
+  
   const token = localStorage.getItem("token")
-
+  console.log("app loaded")
   try {
     if(isLoggedIn) {
-      username = getDecodedJwt(token).sub
+      currentUsername = getDecodedJwt(token).sub
     } 
   } catch (error) {
       if (error instanceof InvalidTokenError) {
@@ -27,6 +27,12 @@ function App() {
       }
       console.log(error)
   }
+
+
+  useEffect(() => {
+    const loggedUser = localStorage.getItem('token');
+    setIsLoggedIn(Boolean(loggedUser));
+  }, []);
 
 
   useEffect(() => {
@@ -112,7 +118,9 @@ function App() {
 
 
   return (
-      <Router>
+    <>
+      {isLoggedIn !== null && 
+        <Router>
         <Routes>
           <Route
             path='/login'
@@ -131,7 +139,8 @@ function App() {
                 <Homepage 
                   isLoggedIn={isLoggedIn} 
                   setIsLoggedIn={setIsLoggedIn} 
-                  userImage={userImage}
+                  currentUsername={currentUsername}
+                  userImage={currentUserImage}
                   currentUserId={currentUserId}
                 /> 
                 : <Navigate replace to="/login"/>
@@ -139,16 +148,17 @@ function App() {
                 
           />
 
+
           <Route 
-            path='/profile'
+            path='/profile/:username'
             element={
               isLoggedIn ? 
               <Profile 
                 setIsLoggedIn={setIsLoggedIn}
-                username={username}
+                currentUsername={currentUsername}
                 currentUserId={currentUserId}
-                setUsername={setUsername}
-                userImage={userImage}
+                setUsername={setCurrentUsername}
+                currentUserImage={currentUserImage}
                 setUserImage={setUserImage}
               /> 
               : <Navigate replace to="/login"/>}
@@ -156,6 +166,10 @@ function App() {
 
         </Routes>
       </Router>
+    }
+    </>
+    
+      
   
    
   )

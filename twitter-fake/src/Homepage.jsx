@@ -9,7 +9,10 @@ const Homepage = (props) => {
   return (
     <div className='home-container'> 
     
-      <Sidebar setIsLoggedIn={props.setIsLoggedIn}/>
+      <Sidebar 
+        setIsLoggedIn={props.setIsLoggedIn}
+        currentUsername={props.currentUsername}
+      />
       <Feed
         userImage={props.userImage}
         currentUserId={props.currentUserId}

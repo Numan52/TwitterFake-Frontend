@@ -4,17 +4,22 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import "./sidebar.css"
 import ProfileContent from './ProfileContent'
+import { useParams } from 'react-router-dom'
 
 const Profile = (props) => {
-    
+
     return (
         <div className='profile-container'>
-            <Sidebar setIsLoggedIn={props.setIsLoggedIn} />
+            <Sidebar 
+                setIsLoggedIn={props.setIsLoggedIn}
+                currentUsername={props.currentUsername}
+                
+            />
             <ProfileContent 
-                username={props.username}
+                currentUsername={props.currentUsername}
                 currentUserId={props.currentUserId}
                 setUsername={props.setUsername}
-                userImage={props.userImage}
+                currentUserImage={props.currentUserImage}
                 setUserImage={props.setUserImage}
             />
         </div>

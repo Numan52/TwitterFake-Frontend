@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { getDecodedJwt, getUserIdFromUsername } from './userUtil'
+import { getDecodedJwt, getUserIdFromUsername, getUserImage } from './userUtil'
 import "./profile.css"
 import { RotatingLines } from 'react-loader-spinner'
 import Post from './Post'
 import { formatDate, handleLikePost, sendResponse, handleLikeResponse } from './PostUtility'
 import EditProfileModal from './EditProfileModal'
 import { InvalidTokenError } from 'jwt-decode'
+import { useParams } from 'react-router-dom'
 
-const ProfileContent = ({username, currentUserId, setUsername, userImage, setUserImage}) => {
+const ProfileContent = ({currentUsername, currentUserId, setUsername, currentUserImage, setCurrentUserImage}) => {
+const {username} = useParams()
+
     const [activeSection, setActiveSection] = useState("posts")
     const [myPosts, setMyPosts] = useState([])
     const [likedPosts, setLikedPosts] = useState([])
@@ -15,7 +18,9 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(0)
     const [showEditModal, setShowEditModal] = useState(false)
-
+    const [userId, setUserId] = useState(null)
+    const [userImage, setUserImage] = useState(null)
+    
     const token = localStorage.getItem("token")
     
 
@@ -26,7 +31,54 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
     const [hasMorelikedTweets, setHasMoreLikedTweets] = useState(true)
     const [hasMoreResponses, setHasMoreResponses] = useState(true)
     
+
     
+    useEffect(() => {
+        const fetchUserId = async () => {
+         
+          try {
+            const fetchedUserId = await getUserIdFromUsername(username)
+            
+            
+            if (fetchedUserId === currentUserId) {
+                setUserId(currentUserId)
+                setUserImage(currentUserImage)
+            } else {
+                setUserId(fetchedUserId)
+            }
+
+          } catch (error) {
+            console.error("Error fetching user image: ", error)
+          }
+        }
+        
+        fetchUserId()
+      }, [username, currentUserId, currentUserImage])
+
+
+    useEffect(() => {
+          const fetchUserImg = async () => {
+            if (userId == null) {
+              return
+            }
+
+            if (userId === currentUserId) {
+                return
+            }
+      
+            try {
+              const imageData = await getUserImage(userId)
+              console.log(imageData)
+              setUserImage(imageData)
+            } catch (error) {
+              console.log(error.message)
+              console.error("Error fetching user image: ", error)
+            }
+            
+          }
+          
+           fetchUserImg()
+        }, [userId, currentUserId])
     
     
     let tweetsToRender = [];
@@ -45,6 +97,12 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
 
 
     useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [username])
+
+
+    useEffect(() => {
+        console.log("setpage")
         setPage(0)
         setHasMoreTweets(true); // Reset "has more" flags for fresh data loading
         setHasMoreLikedTweets(true);
@@ -62,10 +120,11 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
             setLikedPosts([])
             // getLikedPosts()
         }
-    }, [activeSection])
+    }, [activeSection, username])
 
     useEffect(() => {
         // Fetch data only after the page has been reset to 0
+        console.log("fetch posts")
         if (page === 0) {
             if (activeSection === "posts") {
                 getMyPosts();
@@ -75,7 +134,7 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
                 getLikedPosts();
             }
         }
-    }, [page, activeSection]);
+    }, [page, activeSection, username]);
 
 
     useEffect(() => {
@@ -200,20 +259,23 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
     }
 
 
-    
+
+      
 
     return (
     <div className='profile-content-container'>
         <div className='user-container'>
             <div className='user-info-container'>
                 <div className='user-info'>
-                    <img src={userImage == null ? "./user.png" : `data:image/jpg;base64,${userImage}`} alt="" />
+                    <img src={userImage == null ? "/user.png" : `data:image/jpg;base64,${userImage}`} alt="" />
                     <div className='user-container-username'>{username}</div>
                 </div>
 
-                <div className='user-edit-container'>
-                    <button className='edit-user-btn' onClick={() => setShowEditModal(true)}>Edit Profile</button>
-                </div>
+                { currentUsername === username && 
+                    <div className='user-edit-container'>
+                        <button className='edit-user-btn' onClick={() => setShowEditModal(true)}>Edit Profile</button>
+                    </div>
+                }
             </div>
             
   
@@ -275,11 +337,11 @@ const ProfileContent = ({username, currentUserId, setUsername, userImage, setUse
                 </div>
             }
 
-            {showEditModal && 
+            {showEditModal && currentUsername === username &&
                 <EditProfileModal 
                     username={username}
                     setUsername={setUsername}
-                    setUserImage={setUserImage}
+                    setUserImage={setCurrentUserImage}
                     onClose={() => setShowEditModal(false)}
                 />
             }

@@ -109,6 +109,7 @@ const Feed = ({userImage, currentUserId}) => {
       })
       if (response.ok) {
         const newTweet = await response.json()
+        console.log(newTweet)
         setTweets(prevTweets => [newTweet, ...prevTweets])
         console.log("Tweet successfully posted")
       } else {
@@ -172,7 +173,7 @@ const Feed = ({userImage, currentUserId}) => {
     <div className='feed-container'>
       <div className='feed-post-container'>
         <div className='feed-post-input-container'>
-          <img src={userImage == null ? "./user.png" : `data:image/jpg;base64,${userImage}`} alt="" className='feed-post-image'/>
+          <img src={userImage == null ? "/user.png" : `data:image/jpg;base64,${userImage}`} alt="" className='feed-post-image'/>
           <textarea 
             ref={textareaRef}
             className='feed-post-textarea' 
@@ -207,7 +208,6 @@ const Feed = ({userImage, currentUserId}) => {
             key={tweet.id}
             tweet={tweet}
             currentUserId={currentUserId}
-            
             formatDate={formatDate}
             handleLikePost={handleLikePost}
             setRespondingTo={setRespondingTo}

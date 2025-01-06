@@ -67,6 +67,7 @@ const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
         
         
         setUsername(newUsername)
+        window.location.reload()
         // if (image != null) {
         //     setUserImage(image)
         // }
