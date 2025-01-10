@@ -37,6 +37,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
       setChatContent(null);
       setNewContact(null);
       setUserId(null)
+      console.log("/messages")
     }
   }, [location.pathname]);
  
@@ -100,22 +101,24 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
 
       existingContact = allContacts.find((contact) => contact.username === username)
 
-      if (existingContact) {
-        // select already existing chat
-        console.log("existing contact")
-        setNewContact(null)
-        setSelectedChatId(existingContact.chatId)
-        return existingContact.chatId
-      } else {
-        setSelectedChatId(null)
-        const newUser = await createNewContact()
-        console.log(newUser)
-        
-        
-        return newUser
+      if (username) {
+        if (existingContact) {
+          // select already existing chat
+          console.log("existing contact")
+          setNewContact(null)
+          setSelectedChatId(existingContact.chatId)
+          return existingContact.chatId
+        } else {
+          setSelectedChatId(null)
+          const newUser = await createNewContact()
+          console.log(newUser)
+          
+          
+          return newUser
+        }
+  
       }
-
-      
+        
     }
 
     async function createNewContact() {
