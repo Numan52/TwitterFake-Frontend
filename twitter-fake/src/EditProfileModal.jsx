@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import "./editProfile.css"
 import { useNavigate } from 'react-router-dom';
 
+const MAX_FILE_SIZE = 2_000_000 // bytes
+
 const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
     const [newUsername, setNewUsername] = useState(username)
     const [image, setImage] = useState(null); 
@@ -25,6 +27,13 @@ const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
     async function handleSave(e) {
         setErrorMessage("")
         setSuccessMessage("")
+
+        if (image && image.size > MAX_FILE_SIZE) {
+            setErrorMessage("File size exceeds the maximum allowed limit.");
+            return;
+        }
+
+        
         if (newUsername === username && image == null) {
             setSuccessMessage("No changes were made.")
             return
@@ -49,20 +58,23 @@ const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
                   "Authorization": `Bearer ${token}`
                 }
               })
-            
+
             if (response.ok) {
+                console.log("sucess")
                 const data = await response.json()
                 localStorage.setItem("token", data.jwt)
                 setSuccessMessage("Image uploaded successfully!");
                 onClose()
             } else {
+                console.log("dadada")
                 const errorData = await response.text();
                 setErrorMessage(`Upload failed: ${errorData}`);
                 setSuccessMessage("")
                 return
             }
         } catch (error) {
-            setErrorMessage(`Upload failed: ${error.message}`);
+            console.log(error)
+            setErrorMessage(`Could not upload image. Please try again later.`);
             setSuccessMessage("")
             return
         }
@@ -93,7 +105,8 @@ const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
         </div>
 
         <div className='modal-group'>
-        <label>Edit Profile picture:</label>
+        <label>Edit Profile picture: <br /> (Maximum file size: 2 MB)</label>
+        
             <input 
                 type="file" 
                 accept='image/*'

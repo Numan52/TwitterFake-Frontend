@@ -83,7 +83,7 @@ const Login = (props) => {
         </div>
 
       </form>
-      <div style={{marginTop:"10px", fontSize:"1.1rem"}}>(Login may take 1-2 minutes for the first time)</div>
+      <div style={{marginTop:"10px", fontSize:"1.1rem"}}>Test-User: (Username: Martin, Password: a)</div>
       {errorMessage && 
         <div style={{color:"red", marginTop:"15px", fontSize:"20px"}}> 
           {errorMessage}
