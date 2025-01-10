@@ -244,6 +244,11 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
     
     <div className='messages-content-container'>
       <div className='messages-contacts-container'>
+        {allContacts.length === 0 &&
+          <div className='messages-contacts-info'>
+            You currently have no contacts. <br></br> Visit a user's profile page to send them a message.
+          </div>
+        }
         {allContacts.map((contact) => (
           
           <div 
@@ -274,7 +279,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
       </div>
 
       
-      
+    
       <div className='messages-chat-container'>
 
         {!selectedChatId && newContact && username &&
@@ -283,7 +288,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
           </div>
         }
 
-        {!selectedChatId && !newContact &&
+        {!selectedChatId && !newContact && allContacts.length > 0 &&
           <div className='chat-info'>
             Select a chat
           </div>
@@ -314,7 +319,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
             <div className='chat-send-message-container'>
                 <textarea 
                     ref={textareaRef} 
-                    placeholder=""
+                    placeholder="Type a message"
                     rows={1}
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
@@ -324,13 +329,6 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
                 <img src="/send.png" alt="" onClick={sendMessage}/>
             </div>
           }
-
-          
-
-          
-
-
-
 
       </div>
 

@@ -28,6 +28,12 @@
 }
 
 
+.messages-contacts-info {
+    padding: 10px;
+    font-size: 1.3rem;
+}
+
+
 .messages-contact-container {
     display: flex;
     gap: 10px;
