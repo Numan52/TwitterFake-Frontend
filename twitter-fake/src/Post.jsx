@@ -109,7 +109,7 @@ const Post = ({singlePost, tweet, currentUserId, formatDate, handleLikePost, set
                   <div className='user-post-response-user-container'>
                     {<Link to={`/profile/${response.author}`} className='profile-link'> 
                       <div className='user-response-user-link'>
-                        <img src={responderImages[response.id] == null ? "./user.png" : `data:image/jpg;base64,${responderImages[response.id]}`} alt="profile-picture" className='post-response-user-container-image' />
+                        <img src={responderImages[response.id] == null ? "/user.png" : `data:image/jpg;base64,${responderImages[response.id]}`} alt="profile-picture" className='post-response-user-container-image' />
                         <div className='post-response-user-container-username'>{response.author}</div>
                       </div>
                     </Link>}

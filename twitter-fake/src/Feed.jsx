@@ -78,9 +78,8 @@ const Feed = ({userImage, currentUserId}) => {
         console.log("Error while fetching tweets", error)
     } finally {
       console.log("finally block")
-      setTimeout(() => {
-        setLoading(false)
-      }, 1000)
+      setLoading(false)
+      
         
     }
 

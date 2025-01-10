@@ -1,0 +1,162 @@
+.messages-container {
+    display: flex;
+    justify-content: center;
+    
+    margin-top: 50px;
+    margin-left: -80px;
+    
+}
+
+
+.messages-content-container {
+    display: flex;
+    width: 50%;
+    
+    border: 1px solid grey;
+    
+    
+    
+}
+
+
+.messages-contacts-container {
+    display: flex;
+    flex-direction: column;
+    
+    
+    flex: 1;
+}
+
+
+.messages-contact-container {
+    display: flex;
+    gap: 10px;
+    font-size: 1.1rem;
+    background-color: rgba(128, 128, 128, 0.315);
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.514);
+}
+
+
+.messages-contact-container img {
+    width: 40px;
+    height: 40px;
+}
+
+
+.messages-chat-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+    border-left: 1px solid black;
+    padding: 20px;
+    flex: 3;
+}
+
+
+.chat-message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.chat-messages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+    max-height: 650px;
+    overflow-y: scroll;
+    padding: 0 20px;
+}
+
+
+.chat-message {
+    font-size: 1.2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.chat-message-createdAt {
+    font-size: 0.93rem;
+    color: rgb(73, 73, 73);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+.chat-message-container.own-message {
+    align-self: flex-end; /* Align to the right */
+    
+}
+
+
+.chat-message-container.others-message {
+    align-self: flex-start; /* Align to the right */
+    
+    
+}
+
+.chat-message.own-message {
+    background-color: #35d0ff8a; /* Light green background */
+    border-radius: 30px 30px 7px 30px;
+    border: 1px solid black;
+    padding: 15px;
+    
+}
+
+
+.chat-message.others-message {
+    border-radius: 30px 30px 30px 7px;
+    border: 1px solid black;
+    padding: 15px;
+    
+    background-color: #8585855d; /* Light green background */
+}
+
+
+.chat-send-message-container {
+    display: flex;
+    
+    gap: 20px;
+}
+
+
+.chat-send-message-container img{
+    width: 25px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+
+
+.chat-selected {
+    background-color: rgba(92, 92, 92, 0.493);
+}
+
+
+
+.chat-send-message-container textarea {
+    
+    overflow: hidden;
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
+    width: 90%;
+    color: white;
+    background-color: rgb(20, 20, 20);
+}
+
+
+.chat-info {
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}

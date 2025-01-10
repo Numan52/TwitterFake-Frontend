@@ -6,9 +6,10 @@ import Post from './Post'
 import { formatDate, handleLikePost, sendResponse, handleLikeResponse } from './PostUtility'
 import EditProfileModal from './EditProfileModal'
 import { InvalidTokenError } from 'jwt-decode'
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import NotFound from './NotFound'
 
-const ProfileContent = ({currentUsername, currentUserId, setUsername, currentUserImage, setCurrentUserImage}) => {
+const ProfileContent = ({setUserNotFound, currentUsername, currentUserId, setUsername, currentUserImage, setCurrentUserImage}) => {
 const {username} = useParams()
 
     const [activeSection, setActiveSection] = useState("posts")
@@ -21,6 +22,7 @@ const {username} = useParams()
     const [userId, setUserId] = useState(null)
     const [userImage, setUserImage] = useState(null)
     
+
     const token = localStorage.getItem("token")
     
 
@@ -48,7 +50,8 @@ const {username} = useParams()
             }
 
           } catch (error) {
-            console.error("Error fetching user image: ", error)
+            console.error("Error fetching user id: ", error)
+            setUserNotFound(true)
           }
         }
         
@@ -78,7 +81,7 @@ const {username} = useParams()
           }
           
            fetchUserImg()
-        }, [userId, currentUserId])
+    }, [userId, currentUserId])
     
     
     let tweetsToRender = [];
@@ -259,7 +262,6 @@ const {username} = useParams()
     }
 
 
-
       
 
     return (
@@ -274,6 +276,20 @@ const {username} = useParams()
                 { currentUsername === username && 
                     <div className='user-edit-container'>
                         <button className='edit-user-btn' onClick={() => setShowEditModal(true)}>Edit Profile</button>
+                    </div>
+                }
+                {currentUsername !== username &&
+                    <div className='user-interactions-container'>
+                        <div className='user-interactions-msg-container' >
+                            <Link 
+                                to={`/messages/${username}`}
+                            >
+                                <img src='/chat.png' className='user-send-message-img' alt='send message'></img>
+                            </Link> 
+                    
+                            <span>Message</span>
+                        </div>
+                        
                     </div>
                 }
             </div>
@@ -345,6 +361,8 @@ const {username} = useParams()
                     onClose={() => setShowEditModal(false)}
                 />
             }
+
+
 
         </div>
         

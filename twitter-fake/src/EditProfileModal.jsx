@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "./editProfile.css"
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
     const [newUsername, setNewUsername] = useState(username)
@@ -7,6 +8,7 @@ const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
 
+    const navigate = useNavigate();
     const token = localStorage.getItem("token")
 
     function handlePicUpload(e) {
@@ -67,12 +69,12 @@ const EditProfileModal = ({username, setUsername, setUserImage, onClose}) => {
         
         
         setUsername(newUsername)
-        window.location.reload()
+        
         // if (image != null) {
         //     setUserImage(image)
         // }
-        
-        
+        navigate(`/profile/${newUsername}`)
+        window.location.reload()
     }
 
     

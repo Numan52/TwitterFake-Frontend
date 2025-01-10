@@ -27,6 +27,13 @@ const Sidebar = (props) => {
           <div>Profile</div>   
         </div>
       </Link>
+
+      <Link to={`/messages`} className='sidebar-messages-link'>
+        <div className='sidebar-messages'>
+          <img src="/chat.png" alt="" />
+          <div>Messages</div>   
+        </div>
+      </Link>
       
 
       <button className='logout-button' onClick={handeLogout}>

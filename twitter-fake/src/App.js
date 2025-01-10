@@ -8,6 +8,8 @@ import { checkJwtExpired, getDecodedJwt, getUserIdFromUsername, getUserImage } f
 import Sidebar from './Sidebar';
 import Profile from './Profile';
 import { InvalidTokenError } from 'jwt-decode';
+import NotFound from './NotFound';
+import Messages from './Messages';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -148,6 +150,36 @@ function App() {
                 
           />
 
+          <Route 
+            path='/messages/'
+            element={
+              isLoggedIn ? 
+                <Messages 
+                  setIsLoggedIn={setIsLoggedIn} 
+                  currentUsername={currentUsername}
+                  currentUserId={currentUserId}
+                /> 
+                : <Navigate replace to="/login"/>
+              }
+                
+          />
+
+          <Route 
+            path='/messages/:username'
+            element={
+              isLoggedIn ? 
+                <Messages 
+                  setIsLoggedIn={setIsLoggedIn} 
+                  currentUsername={currentUsername}
+                  currentUserId={currentUserId}
+                /> 
+                : <Navigate replace to="/login"/>
+              }
+                
+          />
+
+
+
 
           <Route 
             path='/profile/:username'
@@ -163,6 +195,8 @@ function App() {
               /> 
               : <Navigate replace to="/login"/>}
           />
+
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
       </Router>

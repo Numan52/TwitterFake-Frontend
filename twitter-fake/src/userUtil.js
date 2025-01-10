@@ -46,8 +46,27 @@ export async function getUserIdFromUsername(username) {
         const data = await response.json()
         return data
     } else {
-        
         console.log("failed to fetch user id")
+        throw new Error("failed to fetch user id")
+    }
+}
+
+
+export async function getUser(userId) {
+    const token = getJwt()
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/getUser?userId=${userId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    if(response.ok) {
+        const data = await response.json()
+        return data
+    } else {
+        console.log("failed to fetch user")
+        throw new Error("failed to fetch user")
     }
 }
 

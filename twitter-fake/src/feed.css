@@ -6,7 +6,7 @@
 
 
 .feed-container {
-    width: 700px;
+    width: 40%;
     border: 1px solid grey; 
 }
 
@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    
     justify-content: center;
     border-bottom: 1px rgba(0, 0, 0, 0.274) solid;
     padding: 20px 30px 30px;
@@ -24,6 +25,7 @@
 .feed-post-input-container {
     display: flex;
     align-items: center;
+    width: 70%;
     gap: 15px;
 }
 
@@ -57,7 +59,7 @@
     border-radius: 5px;
     font-size: 20px;
     padding: 10px;
-    width: 400px;
+    width: 100%;
     color: white;
     background-color: rgb(20, 20, 20);
 }
@@ -159,6 +161,7 @@ img {
     display: flex;
     flex-direction: row;
     align-items: end;
+    
     margin-top: 20px;
     gap: 20px;
 }
@@ -306,5 +309,18 @@ img {
     .feed-post-button-container {
         justify-content: flex-start;
         
+    }
+
+    .feed-container {
+        width: 100%;
+    }
+
+
+    .feed-post-input-container {
+        width: 100%;
+    }
+
+    .feed-post-textarea {
+        width: 100%;
     }
 }
