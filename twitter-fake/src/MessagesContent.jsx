@@ -3,6 +3,7 @@ import "./messages.css"
 import { getJwt, getUser } from './userUtil'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { formatDate } from './PostUtility'
+import { RotatingLines } from 'react-loader-spinner'
 
 const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, username}) => {
   const [allContacts, setAllContacts] = useState([])
@@ -11,6 +12,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
   const [chatContent, setChatContent] = useState(null)
   const [newContact, setNewContact] = useState(null)
   const [inputText, setInputText] = useState("")
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
 
   const textareaRef = useRef(null)
@@ -44,6 +46,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
 
   useEffect(() => {
     async function getAllDialoguePartners() {
+      setLoading(true)
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chats/getContacts`, {
           method: "GET",
@@ -71,6 +74,8 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
         }
       } catch (error) {
         setAllContacts([])
+      } finally {
+        setLoading(false)
       }
 
       
@@ -244,7 +249,24 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
     
     <div className='messages-content-container'>
       <div className='messages-contacts-container'>
-        {allContacts.length === 0 &&
+        {loading &&
+                <div className='feed-loading-info'>
+                  <RotatingLines
+                      visible={true}
+                      height="80"
+                      width="80"
+                      color="grey"
+                      strokeWidth="3"
+                      animationDuration="0.75"
+                      ariaLabel="rotating-lines-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                  />
+                  
+                </div>
+        }
+
+        {allContacts.length === 0 && !loading &&
           <div className='messages-contacts-info'>
             You currently have no contacts. <br></br> Visit a user's profile page to send them a message.
           </div>
@@ -288,7 +310,7 @@ const MessagesContent = ({currentUsername, currentUserId, userId, setUserId, use
           </div>
         }
 
-        {!selectedChatId && !newContact && allContacts.length > 0 &&
+        {!selectedChatId && !newContact && allContacts.length > 0 && !loading &&
           <div className='chat-info'>
             Select a chat
           </div>
